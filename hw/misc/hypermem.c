@@ -165,22 +165,6 @@ void logprinterr(HyperMemState *state, const char *fmt, ...) {
     va_end(args);
 }
 
-static void swap_cr3(HyperMemSessionState *session) {
-    X86CPU *cpu = X86_CPU(current_cpu);
-    bool kvm_vcpu_dirty;
-    uint32_t tmp;
-
-    /* If we don't have a process_cr3 to swap we do nothing */
-    kvm_vcpu_dirty = current_cpu->kvm_vcpu_dirty;
-    cpu_synchronize_state(current_cpu);
-    current_cpu->kvm_vcpu_dirty = kvm_vcpu_dirty;
-    if (session->process_cr3 == 0)
-        return;
-    tmp = cpu->env.cr[3];
-    cpu->env.cr[3] = session->process_cr3;
-    session->process_cr3 = tmp;
-}
-
 static void hypermem_session_set_active(
 	HyperMemState *state,
 	unsigned session_id)
