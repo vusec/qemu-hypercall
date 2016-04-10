@@ -2577,6 +2577,7 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
     case KVM_EXIT_EXCEPTION:
         fprintf(stderr, "KVM: exception %d exit (error code 0x%x)\n",
                 run->ex.exception, run->ex.error_code);
+	if (log_interrupt) log_interrupt(run->ex.exception);
         ret = -1;
         break;
     case KVM_EXIT_DEBUG:

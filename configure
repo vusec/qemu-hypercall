@@ -336,6 +336,7 @@ libssh2=""
 vhdx=""
 quorum=""
 numa=""
+hypermem="no"
 
 # parse CC options first
 for opt do
@@ -1134,6 +1135,10 @@ for opt do
   ;;
   --enable-numa) numa="yes"
   ;;
+  --disable-hypermem) hypermem="no"
+  ;;
+  --enable-hypermem) hypermem="yes"
+  ;;
   *)
       echo "ERROR: unknown option $opt"
       echo "Try '$0 --help' for more information"
@@ -1407,6 +1412,8 @@ Advanced options (experts only):
   --enable-quorum          enable quorum block filter support
   --disable-numa           disable libnuma support
   --enable-numa            enable libnuma support
+  --disable-hypermem       disable memory hypercall interface
+  --enable-hypermem        enable memory hypercall interface
 
 NOTE: The object files are built at the place where configure is launched
 EOF
@@ -4437,6 +4444,7 @@ echo "TPM passthrough   $tpm_passthrough"
 echo "QOM debugging     $qom_cast_debug"
 echo "vhdx              $vhdx"
 echo "Quorum            $quorum"
+echo "HyperMem          $hypermem"
 echo "lzo support       $lzo"
 echo "snappy support    $snappy"
 echo "bzip2 support     $bzip2"
@@ -4901,6 +4909,10 @@ fi
 
 if test "$quorum" = "yes" ; then
   echo "CONFIG_QUORUM=y" >> $config_host_mak
+fi
+
+if test "$hypermem" = "yes" ; then
+  echo "CONFIG_HYPERMEM=y" >> $config_host_mak
 fi
 
 if test "$vhdx" = "yes" ; then

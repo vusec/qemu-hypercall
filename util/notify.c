@@ -69,3 +69,5 @@ int notifier_with_return_list_notify(NotifierWithReturnList *list, void *data)
     }
     return ret;
 }
+
+void (* log_interrupt)(int intno);

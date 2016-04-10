@@ -473,6 +473,7 @@ static void kvm_coalesce_mmio_region(MemoryListener *listener,
                                      MemoryRegionSection *secion,
                                      hwaddr start, hwaddr size)
 {
+#if 0
     KVMState *s = kvm_state;
 
     if (s->coalesced_mmio) {
@@ -484,12 +485,14 @@ static void kvm_coalesce_mmio_region(MemoryListener *listener,
 
         (void)kvm_vm_ioctl(s, KVM_REGISTER_COALESCED_MMIO, &zone);
     }
+#endif
 }
 
 static void kvm_uncoalesce_mmio_region(MemoryListener *listener,
                                        MemoryRegionSection *secion,
                                        hwaddr start, hwaddr size)
 {
+#if 0
     KVMState *s = kvm_state;
 
     if (s->coalesced_mmio) {
@@ -501,6 +504,7 @@ static void kvm_uncoalesce_mmio_region(MemoryListener *listener,
 
         (void)kvm_vm_ioctl(s, KVM_UNREGISTER_COALESCED_MMIO, &zone);
     }
+#endif
 }
 
 int kvm_check_extension(KVMState *s, unsigned int extension)

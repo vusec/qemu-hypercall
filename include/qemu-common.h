@@ -484,4 +484,6 @@ int parse_debug_env(const char *name, int max, int initial);
 
 const char *qemu_ether_ntoa(const MACAddr *mac);
 
+extern void (* log_interrupt)(int intno);
+ 
 #endif

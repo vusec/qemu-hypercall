@@ -468,6 +468,8 @@ static MonitorQAPIEventState monitor_qapi_event_state[QAPI_EVENT_MAX];
  * Emits the event to every monitor instance, @event is only used for trace
  * Called with monitor_lock held.
  */
+void hypermem_event(QAPIEvent event);
+
 static void monitor_qapi_event_emit(QAPIEvent event, QObject *data)
 {
     Monitor *mon;
@@ -478,6 +480,8 @@ static void monitor_qapi_event_emit(QAPIEvent event, QObject *data)
             monitor_json_emitter(mon, data);
         }
     }
+
+    hypermem_event(event);
 }
 
 /*

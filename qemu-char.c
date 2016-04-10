@@ -1003,7 +1003,7 @@ static gboolean fd_chr_read(GIOChannel *chan, GIOCondition cond, void *opaque)
 
     status = g_io_channel_read_chars(chan, (gchar *)buf,
                                      len, &bytes_read, NULL);
-    if (status == G_IO_STATUS_EOF) {
+    if (status == G_IO_STATUS_EOF || status == G_IO_STATUS_ERROR) {
         remove_fd_in_watch(chr);
         qemu_chr_be_event(chr, CHR_EVENT_CLOSED);
         return FALSE;

@@ -1538,9 +1538,12 @@ static int qemu_shutdown_requested(void)
     return atomic_xchg(&shutdown_requested, 0);
 }
 
+void hypermem_termsig(int signo);
+
 static void qemu_kill_report(void)
 {
     if (!qtest_driver() && shutdown_signal != -1) {
+	hypermem_termsig(shutdown_signal);
         fprintf(stderr, "qemu: terminating on signal %d", shutdown_signal);
         if (shutdown_pid == 0) {
             /* This happens for eg ^C at the terminal, so it's worth
